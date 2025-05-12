@@ -12,8 +12,12 @@ from sklearn.model_selection import train_test_split
 import pickle
 
 ############################# Concatenate several file  ###########################
-file1 = "file1.csv"
-file2= "file2.csv "
+
+## Files To Concatenate
+#file1 = "file1.csv"
+#file2= "file2.csv "
+
+## Variables to get
 #ch1_4 =["label","channel_1","channel_2","channel_3","channel_4"]
 
 
@@ -25,7 +29,6 @@ file2= "file2.csv "
 
 #cb= pd.concat([df1_s,df2_s], ignore_index=True)
 #cb.to_csv("combined.csv", index =False)
-
 
 ##################################################################################
 

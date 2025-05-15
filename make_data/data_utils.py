@@ -189,6 +189,8 @@ def split_and_save_data(data, test_size=0.15, val_size=0.15, filename='omni.pkl'
     train_idx, val_idx = train_test_split(
         train_val_idx, test_size=val_size / (1 - test_size), stratify=y_train_val, random_state=42
     )
+    
+
 
     def get_split(idx):
         return {
@@ -196,8 +198,11 @@ def split_and_save_data(data, test_size=0.15, val_size=0.15, filename='omni.pkl'
             'm2': m2[idx],
             'm3': m3[idx],
             'm4': m4[idx],
+            'id': np.arange(1, len(idx)).reshape(-1,1,1).astype(np.int64),
             'label': y[idx].reshape(-1,1,1).astype(np.int64)
+            
         }
+    
 
     data_dict = {
         'train': get_split(train_idx),

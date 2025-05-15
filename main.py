@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 from src import train
 from src import test
 
-torch.cuda.empty_cache()
+
 
 parser = argparse.ArgumentParser(description='Husformer Sentiment Analysis')
 parser.add_argument('-f', default='', type=str)
@@ -15,7 +15,7 @@ parser.add_argument('--model', type=str, default='Husformer',
                     help='name of the model to use (default: Husformer)')
 
 # Tasks
-parser.add_argument('--dataset', type=str, default='ulv',
+parser.add_argument('--dataset', type=str, default='omni',
                     help='dataset to use (default: Husformer)')
 parser.add_argument('--data_path', type=str, default='data',
                     help='path for storing the dataset')
@@ -27,7 +27,7 @@ parser.add_argument('--relu_dropout', type=float, default=0.1,
                     help='relu dropout')
 parser.add_argument('--embed_dropout', type=float, default=0.1,
                     help='embedding dropout')
-parser.add_argument('--res_dropout', type=float, default=0.05,
+parser.add_argument('--res_dropout', type=float, default=0.1,
                     help='residual block dropout')
 parser.add_argument('--out_dropout', type=float, default=0.1,
                     help='output layer dropout')
@@ -41,15 +41,15 @@ parser.add_argument('--attn_mask', action='store_false',
                     help='use attention mask for Transformer (default: true)')
 
 # Tuning
-parser.add_argument('--batch_size', type=int, default=512, metavar='N',
+parser.add_argument('--batch_size', type=int, default=64, metavar='N',
                     help='batch size (default: 1024)')
 parser.add_argument('--clip', type=float, default=0.8,
                     help='gradient clip value (default: 0.8)')
-parser.add_argument('--lr', type=float, default=1e-3,
+parser.add_argument('--lr', type=float, default=2e-3,
                     help='initial learning rate (default: 1e-3)')
 parser.add_argument('--optim', type=str, default='Adam',
                     help='optimizer to use (default: Adam)')
-parser.add_argument('--num_epochs', type=int, default=20,
+parser.add_argument('--num_epochs', type=int, default=50,
                     help='number of epochs (default: 20)')
 parser.add_argument('--when', type=int, default=5,
                     help='when to decay learning rate (default: 5)')
@@ -57,13 +57,13 @@ parser.add_argument('--batch_chunk', type=int, default=1,
                     help='number of chunks per batch (default: 1)')
 
 # Logistics
-parser.add_argument('--log_interval', type=int, default=2,
+parser.add_argument('--log_interval', type=int, default=5,
                     help='frequency of result logging (default: 30)')
 parser.add_argument('--seed', type=int, default=1111,
                     help='random seed')
 parser.add_argument('--no_cuda', action='store_true',
                     help='do not use cuda')
-parser.add_argument('--name', type=str, default='ulv',
+parser.add_argument('--name', type=str, default='omni',
                     help='name of the trial (default: "hus")')
 parser.add_argument('--eval', action='store_true',
                     help='Perform evaluation only')
@@ -96,7 +96,8 @@ test_data = get_data(args, dataset, 'test')
 
 # use gpu
 
-generator = torch.Generator(device="cuda")
+
+generator = torch.Generator(device="cpu")
 
 
 print(generator.device)
